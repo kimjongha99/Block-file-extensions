@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fixed Extensions</title>
+</head>
+<body>
+<h1>Fixed Extensions</h1>
+<form th:action="@{/fixed-extensions}" method="post">
+    <input type="text" name="extension" placeholder="Extension">
+    <input type="checkbox" name="checked"> Checked
+    <button type="submit">Add</button>
+</form>
+<ul>
+    <li th:each="extension : ${extensions}">
+        <span th:text="${extension.extension}"></span> - <span th:text="${extension.checked ? 'Checked' : 'Unchecked'}"></span>
+        <form th:action="@{/fixed-extensions/delete}" method="post" style="display:inline">
+            <input type="hidden" name="id" th:value="${extension.id}">
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fixed Extension Detail</title>
+</head>
+<body>
+<h1>Fixed Extension Detail</h1>
+<div>
+    <p>Extension: <span th:text="${extension.extension}"></span></p>
+    <p>Checked: <span th:text="${extension.checked ? 'Checked' : 'Unchecked'}"></span></p>
+</div>
+<a th:href="@{/fixed-extensions}">Back to list</a>
+</body>
+</html>

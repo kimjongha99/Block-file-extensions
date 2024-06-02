@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Custom Extensions</title>
+</head>
+<body>
+<h1>Custom Extensions</h1>
+<form th:action="@{/custom-extensions}" method="post">
+    <input type="text" name="extension" placeholder="Extension">
+    <button type="submit">Add</button>
+</form>
+<ul>
+    <li th:each="extension : ${extensions}">
+        <span th:text="${extension.extension}"></span>
+        <form th:action="@{/custom-extensions/delete}" method="post" style="display:inline">
+            <input type="hidden" name="id" th:value="${extension.id}">
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+</body>
+</html>
