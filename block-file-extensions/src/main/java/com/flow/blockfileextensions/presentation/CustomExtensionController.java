@@ -2,44 +2,56 @@ package com.flow.blockfileextensions.presentation;
 
 import com.flow.blockfileextensions.application.CustomExtensionService;
 import com.flow.blockfileextensions.domain.CustomExtension;
-import com.flow.blockfileextensions.presentation.dto.CustomExtensionDTO;
+import com.flow.blockfileextensions.infrastructure.BaseResponse;
+import com.flow.blockfileextensions.presentation.dto.custom.CustomExtensionRequestDTO;
+import com.flow.blockfileextensions.presentation.dto.custom.CustomExtensionResponseDTO;
+import com.flow.blockfileextensions.presentation.dto.custom.CustomExtensionUpdateRequestDTO;
+import com.flow.blockfileextensions.presentation.dto.custom.GetCustomExtensionResponseDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/custom-extensions")
+
+@RestController
+@RequestMapping("/api/custom-extensions")
 @RequiredArgsConstructor
 public class CustomExtensionController {
 
     private final CustomExtensionService customExtensionService;
 
-    @GetMapping
-    public String listCustomExtensions(Model model) {
-        List<CustomExtension> extensions = customExtensionService.findAll();
-        model.addAttribute("extensions", extensions);
-        return "custom-extensions/list";
-    }
-
     @PostMapping
-    public String addCustomExtension(@ModelAttribute CustomExtensionDTO extensionDTO) {
-        customExtensionService.save(extensionDTO.toEntity());
-        return "redirect:/custom-extensions";
+    public BaseResponse<CustomExtensionResponseDTO> addCustomExtension(@RequestBody @Valid CustomExtensionRequestDTO requestDTO) {
+        CustomExtensionResponseDTO responseDTO = customExtensionService.addCustomExtension(requestDTO);
+        return BaseResponse.success(responseDTO);
+
     }
 
-    @PostMapping("/delete")
-    public String deleteCustomExtension(@RequestParam Long id) {
-        customExtensionService.delete(id);
-        return "redirect:/custom-extensions";
+    @GetMapping
+    public BaseResponse<GetCustomExtensionResponseDTO> getAllCustomExtensions(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        GetCustomExtensionResponseDTO responseDTO = customExtensionService.getCustomExtensions(page, size);
+        return BaseResponse.success(responseDTO);
     }
 
-    @GetMapping("/{id}")
-    public String getCustomExtension(@PathVariable Long id, Model model) {
-        CustomExtension extension = customExtensionService.findById(id).orElse(null);
-        model.addAttribute("extension", extension);
-        return "custom-extensions/detail";
+    @PutMapping("/{id}")
+    public BaseResponse<CustomExtensionResponseDTO> updateCheckedStatus(@PathVariable Long id, @RequestBody CustomExtensionUpdateRequestDTO updateRequestDTO) {
+        updateRequestDTO.setId(id); // 경로 변수로 받은 ID를 DTO에 설정
+        CustomExtensionResponseDTO responseDTO = customExtensionService.updateCheckedStatus(updateRequestDTO);
+        return BaseResponse.success(responseDTO);
+    }
+
+    @PutMapping("/clear")
+    public BaseResponse<Void> clearAllCheckedStatus() {
+        customExtensionService.clearAllCheckedStatus();
+        return BaseResponse.success();
+    }
+
+    @DeleteMapping("/{id}")
+    public BaseResponse<Void> deleteCustomExtension(@PathVariable Long id) {
+        customExtensionService.deleteCustomExtension(id);
+        return BaseResponse.success();
     }
     }

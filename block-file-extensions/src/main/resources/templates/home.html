@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Team</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/index.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+<div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <div class="text-center mb-6">
+        <img th:src="@{/images/img.png}" src="https://via.placeholder.com/150x50?text=flow.team" alt="Flow Team Logo" class="mx-auto mb-4">
+    </div>
+    <div class="mb-6">
+        <div class="flex justify-between items-center mb-2">
+            <h2 class="text-lg font-bold">고정 확장자</h2>
+            <button class="text-blue-500" id="clear-fixed-extensions-button">초기화 하기</button>
+        </div>
+        <div class="flex flex-wrap gap-2" id="fixed-extensions">
+            <!-- 고정 확장자 버튼들 -->
+        </div>
+    </div>
+    <div class="mb-6">
+        <div class="flex justify-between items-center mb-2">
+            <h2 class="text-lg font-bold">커스텀 확장자</h2>
+            <button class="text-blue-500" id="clear-custom-extensions-button">초기화 하기</button>
+        </div>
+        <div class="flex items-center mb-2">
+            <input type="text" id="custom-extension-input" placeholder="확장자를 입력해주세요" class="custom-input mr-2">
+            <button class="custom-button" id="add-custom-extension-button">추가</button>
+        </div>
+        <div class="flex flex-wrap gap-2" id="custom-extensions">
+            <!-- 커스텀 확장자 버튼들 -->
+        </div>
+        <div class="text-gray-500 text-sm mb-2" id="custom-extension-page"></div>
+        <div class="text-gray-500 text-sm mb-2">확장자는 최대 20글자까지 입력 가능합니다.</div>
+        <div class="text-gray-500 text-sm" id="custom-extension-count"></div>
+    </div>
+    <div>
+        <h2 class="text-lg font-bold mb-2">파일 업로드</h2>
+        <div class="file-upload mb-4">
+            <input type="file" id="file-input" class="hidden" />
+            <label for="file-input" class="text-gray-500 cursor-pointer">파일 선택하기</label>
+        </div>
+        <button class="custom-button w-full" id="upload-file-button">파일 제출</button>
+    </div>
+    <div id="error-message" class="text-red-500"></div>
+</div>
+</body>
+</html>

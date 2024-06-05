@@ -1,46 +1,42 @@
 package com.flow.blockfileextensions.presentation;
 
 import com.flow.blockfileextensions.application.FixedExtensionService;
-import com.flow.blockfileextensions.domain.FixedExtension;
+import com.flow.blockfileextensions.infrastructure.BaseResponse;
+import com.flow.blockfileextensions.presentation.dto.fix.FixedExtensionResponseDTO;
+import com.flow.blockfileextensions.presentation.dto.fix.FixedExtensionUpdateRequestDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/fixed-extensions")
+
+@RestController
+@RequestMapping("/api/fixed-extensions")
 @RequiredArgsConstructor
-public class FixedExtensionController {
+public class FixedExtensionController { //TO DO 이름 바꾸기
 
     private final FixedExtensionService fixedExtensionService;
 
     @GetMapping
-    public String listFixedExtensions(Model model) {
-        List<FixedExtension> extensions = fixedExtensionService.findAll();
-        model.addAttribute("extensions", extensions);
-        return "fixed-extensions/list";
+    public BaseResponse<List<FixedExtensionResponseDTO>> getAllFixedExtensions() {
+        List<FixedExtensionResponseDTO> fixedExtensions = fixedExtensionService.findAll();
+        return BaseResponse.success(fixedExtensions);
     }
 
-    @PostMapping
-    public String addFixedExtension(@ModelAttribute FixedExtension extension) {
-        fixedExtensionService.save(extension);
-        return "redirect:/fixed-extensions";
+    @PutMapping("/{id}")
+    public BaseResponse<FixedExtensionResponseDTO> updateFixedExtension(@PathVariable Long id,
+                                                                        @RequestBody @Valid FixedExtensionUpdateRequestDTO updateRequestDTO) {
+        updateRequestDTO.setId(id); // URL 경로로 받은 ID를 DTO에 설정
+        FixedExtensionResponseDTO updatedFixedExtension = fixedExtensionService.updateCheckedStatus(updateRequestDTO);
+        return BaseResponse.success(updatedFixedExtension);
     }
 
-    @PostMapping("/delete")
-    public String deleteFixedExtension(@RequestParam Long id) {
-        fixedExtensionService.delete(id);
-        return "redirect:/fixed-extensions";
-    }
 
-    @GetMapping("/{id}")
-    public String getFixedExtension(@PathVariable Long id, Model model) {
-        FixedExtension extension = fixedExtensionService.findById(id).orElse(null);
-        model.addAttribute("extension", extension);
-        return "fixed-extensions/detail";
-    }
 
+    @PutMapping("/clear")
+    public BaseResponse<Void> clearAllCheckedStatus() {
+        fixedExtensionService.clearAllCheckedStatus();
+        return BaseResponse.success();
+    }
 }
-

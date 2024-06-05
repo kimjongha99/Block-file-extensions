@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: ENC(jVmJwJpId/wCyK8TrdHfbkWWnfZuL743Q1yn3yU/biIdB+ixvvizz+29jTkNlGuXx9hxYoJKZTRwofe8zEeXxTviLDo7O9a+ycEur14mNowf24MXgF+VjeFZZKptpUMR)
+    url: ENC(css/Qv1AFynp6ZHKwhIVbzt/uaJQFGdrZlG1rwQPJRJMJLi9hx5dNBqkDP8Gezl5UC0DGyKpZ0e/dsrvSmwSBvkwXM9bLifCyWd7H6DZL2Dl0Xk9M9AXvFJ1tF3o1bQj)
     username: root
     password: ENC(6VZm7XOLLBv2ImqSYHS2iz+HRC4GDMmI)
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true     # Hibernate? ???? SQL? ??? ??
     properties:
       hibernate:

@@ -18,6 +18,11 @@ public class CustomExtension {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private boolean checked;
 
-    private String extension;
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 }

@@ -15,7 +15,11 @@ public class FixedExtension {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String extension;
+    private String name;
     private boolean checked;
+
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
+    }
 }
