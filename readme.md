@@ -2,7 +2,7 @@
 ![image](https://github.com/kimjongha99/Block-file-extensions/assets/95283879/eb327a94-1491-4a60-afaf-ef8ce25b9814)
 
 ## 도메인
-> [FLOW_파일 확장자 차단 시스템](http://3.34.183.32:8080//)
+> [FLOW_파일 확장자 차단 시스템](http://3.34.183.32:8080/)
 
 ---
 
